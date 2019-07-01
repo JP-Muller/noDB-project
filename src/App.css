@@ -324,6 +324,14 @@ input[type="checkbox"]:checked + label {
   background-color: transparent;
   border-color: transparent;
 }
+#version{
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+}
 
 #rQuote {
   font-family: "Lobster", cursive;

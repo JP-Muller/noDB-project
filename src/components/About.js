@@ -12,7 +12,7 @@ function About() {
                 <iframe id='vidBox' title='video' width="560" height="315" src="https://www.youtube.com/embed/F-MYrZIeMtI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <p className='aboutStyle'>"You play it safe, you end progression"</p>
             </section>
             <hr id='hrAbout'/>
-            <p className='aboutStyle2'>Version: .137</p>
+            <p id='version'>Version: .137</p>
         </div>
     )
 }
