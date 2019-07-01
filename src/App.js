@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './App.css'
 import List from './components/List';
 import Navbar from './components/Navbar'
@@ -8,29 +8,8 @@ import Entries from './components/Entries'
 import About from './components/About'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-export class App extends Component {
-  // constructor(){
-  //   super()
+function App()  {
 
-  //   this.state ={
-  //     test: 'hello'
-  //   }
-
-  // }
-
-
-  //   componentDidMount() {
-  //   axios
-  //   .get('/entries')
-  //   .then(res => {
-  //     this.setState({quotes: res.data})
-  //   })
-  //   .catch(err => {
-  //     console.log('err from server', err)
-  //   })
-  // }
-
-  render() {
     return (
       <Router>
         <div>
@@ -48,6 +27,6 @@ export class App extends Component {
 
     )
   }
-}
+
 
 export default App

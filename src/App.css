@@ -30,6 +30,14 @@ ul {
   margin-top: 10px;
 }
 
+#taskItemDel {
+color: lightcoral;
+background: transparent;
+border: transparent;
+cursor: pointer;
+
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -114,7 +122,15 @@ ul {
 }
 
 .container {
-  width: 80vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+  text-align: center;
+}
+
+#hrAbout {
+  color: white;
 }
 
 .listStyle {
@@ -210,7 +226,7 @@ input[type="checkbox"]:checked + label {
   box-sizing: border-box;
   border-radius: 15px;
   width: 80%;
-  height: 65vh;
+  height: 70vh;
   padding: 20px 200px 50px 200px;
   background: white;
   color: black;
@@ -273,6 +289,7 @@ input[type="checkbox"]:checked + label {
 .button-row {
   color: black;
   display: flex;
+  /* align-items: flex-end; */
   justify-content: space-evenly;
   margin: 10px;
 }

@@ -6,7 +6,9 @@ const Navbar = () => {
         <nav className='navbar navBackground'>
             <header>
             <h1>
+                <Link to='/'>
                 <i className='icon far fa-check-square checkIcon' />Better Yourself Everyday
+                </Link>
         </h1>
         </header>
             <div id='navChild'>

@@ -9,7 +9,9 @@ class Entries extends Component {
             id: 1,
             i: 0,
             list: [],
-            listId: ''
+            listId: '',
+            editing: false,
+            currThought: ''
         }
         this.handleNext = this.handleNext.bind(this)
         this.handlePrevious = this.handlePrevious.bind(this)
@@ -28,63 +30,105 @@ class Entries extends Component {
             })
     }
 
+    //a failed experiment
+    //left 37 right 39 
+    // handleKeyNext = e => {
+    //     console.log('right arrow')
+    //     if(e.keycode === 39){
+    //         this.handleNext()
+    //     }
+    // }
+
+    // handleKeyPrev = e => {
+    //     console.log('left arrow')
+    //     if (e.keyCode === 37){
+    //         this.handlePrevious()
+    //     }
+    // }
+    // onKeyDown={this.handleKeyNext}
+    // onKeyDown={this.handleKeyPrev}
+
     handleNext() {
         if (this.state.i < this.state.list.length - 1) {
             let i = this.state.i + 1
             let listId = this.state.list[i].id
             console.log(`List ID ${listId} `)
-            
+
             this.setState({
                 i
             })
-            this.setState({listId})
+            this.setState({ listId })
             console.log(this.state.i)
             // console.log(this.state.list.length)
         }
     }
-
     handlePrevious() {
         if (this.state.i > 0) {
             let i = this.state.i - 1
             let listId = this.state.list[i].id
             console.log(`List ID ${listId} `)
             console.log(this.state.i)
-        
+
             this.setState({
                 i
             })
-            this.setState({listId})
+            this.setState({ listId })
         }
-        
-    }
-    // delete and update reqs happen here
 
-    updateEntry(){
-    let {listId} = this.state
-    let id = listId
-    axios
-    .put(`api/entries/${id}`).then(res => {
-        console.log(res.data)
-        this.setState({list: res.data})
-        .catch(err => console.log(`Couldn't update..`, err))
-    })
+    }
+    handleEditing = () => {
+        console.log('hit edit')
+        this.setState({ editing: !this.state.editing })
+        console.log(this.state.editing)
     }
 
-    deleteEntry () {
-    let {listId} = this.state
-    let id = listId 
-    axios
-    .delete(`/api/entries/${id}`).then(res => {
-        console.log(res.data)
-        this.setState({list: res.data})
-    })
-    .catch(err => console.log(`Couldn't delete..`, err))
+    handleChange = currThought => {
+        this.setState({ currThought })
+        console.log({ currThought })
+    };
+
+    handleEditingDone = e => {
+        let { listId, currThought } = this.state
+        let id = listId
+        if (e.keyCode === 13) {
+            console.log('Finished editing')
+            this.setState({ editing: !this.state.editing })
+            axios
+            .put(`/api/entries/${id}`, { currThought })
+            .then(res => {
+                console.log(res.data)
+                this.setState({ list: res.data })
+            })
+        }
     }
 
-    
+    updateThought() {
+        let { listId } = this.state
+        let id = listId
+        axios
+            .put(`/api/entries/${id}`)
+            .then(res => {
+                console.log(res.data)
+                this.setState({ list: res.data })
+            })
+            .catch(err => console.log(`Couldn't update..`, err))
+
+    }
+
+    deleteEntry() {
+        let { listId } = this.state
+        let id = listId
+        axios
+            .delete(`/api/entries/${id}`).then(res => {
+                console.log(res.data)
+                this.setState({ list: res.data })
+            })
+            .catch(err => console.log(`Couldn't delete..`, err))
+    }
+
 
     readEntry() {
-        let { list, i } = this.state
+        let { list, i, editing } = this.state
         return (
             <div id='entryMain'>
                 <div id='dateTime'>{list[i].date}
@@ -95,32 +139,33 @@ class Entries extends Component {
                 <div id='accTask'>
                     <hr />
                     <h3><i className='icon far fa-check-square checkIcon' /><u>Completed Tasks</u><i className='icon far fa-check-square entryIconRight' /></h3>
-                    {/* <div id='entryTasks'></div> */}
-                    <ul id='entryTasks'>
-                        <li> {list[i].accTasks[0]} </li>
-                        <li> {list[i].accTasks[1]} </li>
-                        <li> {list[i].accTasks[2]} </li>
-                        <li> {list[i].accTasks[3]} </li>
-                        <li> {list[i].accTasks[4]} </li>
-                        <li> {list[i].accTasks[5]} </li>
-                        <li> {list[i].accTasks[6]} </li>
-                        <li> {list[i].accTasks[7]} </li>
-                        <li> {list[i].accTasks[8]} </li>
-                        <li> {list[i].accTasks[9]} </li>
+                    <ul id='entryTasks' key='targetTask'>
+                        <div><li> {list[i].accTasks[0]} </li></div>
+                        <div><li> {list[i].accTasks[1]} </li></div>
+                        <div><li> {list[i].accTasks[2]} </li></div>
+                        <div><li> {list[i].accTasks[3]} </li></div>
+                        <div><li> {list[i].accTasks[4]} </li></div>
+                        <div><li> {list[i].accTasks[5]} </li></div>
+                        <div><li> {list[i].accTasks[6]} </li></div>
+                        <div><li> {list[i].accTasks[7]} </li></div>
+                        <div><li> {list[i].accTasks[8]} </li></div>
+                        <div><li> {list[i].accTasks[9]} </li></div>
                     </ul>
                 </div>
                 <hr />
                 <div id='addThoughts'>
                     <h3 id='addThotHeader'><u>Additional Thoughts</u></h3>
-                    <div id='addThoughtsBlock'>
-                        {list[i].thought}
+                    <div id='addThoughtsBlock' >
+                        {editing ? (<input defaultValue={list[i].thought} onChange={(e) => this.handleChange(e.target.value)} onKeyDown={this.handleEditingDone} />) : (
+                            <p>{list[i].thought}</p>
+                        )}
                     </div>
 
                 </div>
-                <div className="button-row">
-                    <button className="nextPrev" onClick={this.handlePrevious}>{'< Previous'}</button>
+                <div className="button-row"  >
+                    <button  className="nextPrev" onClick={this.handlePrevious}>{'< Previous'}</button>
                     <div className="middle-buttons">
-                        <button className="buttons" onClick={this.updateEntry} >Edit</button>
+                        <button className="buttons" onClick={this.handleEditing}>Edit</button>
                         <button className="buttons" onClick={this.deleteEntry} >Delete</button>
                     </div>
                     <button className="nextPrev" onClick={this.handleNext}>{'Next >'}</button>
@@ -131,15 +176,6 @@ class Entries extends Component {
         )
 
     }
-
-    /* //     <div>
-    //     <div>
-    //     {list[i].date}
-    //     </div>
-    //     {list[i].id}
-    //     {list[i].accTasks}
-    //     {list[i].thoughts}
-    // </div> */
 
     render() {
 

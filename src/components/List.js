@@ -7,17 +7,13 @@ export default class List extends Component {
 
         this.state = {
             inputStr: '',
+            initTasks: [],
             accTasks: [],
-            checked: false,
             thought: '',
             date: ''
 
         }
     }
-
-    // componentDidMount(){
-    //     this.getDate()
-    // }
 
     inputChange = inputStr => {
         this.setState({ inputStr })
@@ -29,41 +25,82 @@ export default class List extends Component {
         this.setState({ date })
         this.setState({ thought })
         console.log({ thought })
-        console.log({date})
+        console.log({ date })
     }
 
-    handleCheckChange = e => {
-        this.setState({ checked: !this.state.checked })
+    handleCheckChange = targetTask => {
+        console.log(targetTask)
+        let checkedTasks = this.state.accTasks
+        checkedTasks.push(targetTask)
+        this.setState({
+            accTasks: checkedTasks
+        })
         console.log(this.state.checked)
+        console.log(this.state.accTasks)
     }
 
     addToTasks = input => {
-        let taskArray = this.state.accTasks
+        let taskArray = this.state.initTasks
 
         taskArray.push(input)
 
         this.setState({
-            accTasks: taskArray,
-            inputStr: '',
+            initTasks: taskArray,
+            inputStr: ''
         })
+        console.log(this.state.accTasks)
     }
 
-    //add must happen here.
+    // enterTask = input => {
+    //     if(e.key === "Enter"){
+    //         console.log('enter hit')
+        // let {inputStr, initTasks} = this.state
+        // let taskArray = initTasks
+        //     taskArray.push(inputStr)
+        //     console.log(taskArray)
+        //     this.setState({
+        //         initTasks: taskArray,
+        //         inputStr: ''
+        //     })
+        
+    //     console.log({inputStr})
+    //     console.log('enterTask hit..')
+        
+    //     }
+    // }
+    // onKeyPress={(e) => this.enterTask(e.target.value)}
 
-    // addEntry = () => {
-    // let newEntry = {
-    //     date: this.state.date,
-    //     accTasks: this.state.accTasks,
-    //     thought: this.state.thought,
-    // }
-    //    axios.post('/api/entries', newEntry)
-    //    .then(res => {
-    //        console.log('add fired')
-    //        console.log(res.data)
-    //    }).catch(err => {
-    //     console.log('err from server', err)
-    // })
-    // }
+    onEnter = e => {
+        let {inputStr, initTasks} = this.state
+        let taskArray = initTasks
+        if (e.keyCode ===13){
+            console.log('Enter hit..')
+            // this.addToTasks()
+            taskArray.push(inputStr)
+            console.log(taskArray)
+            this.setState({
+                initTasks: taskArray,
+                inputStr: ''
+            })
+        }
+    }
+
+
+    handleTaskDelete = targetTask => {
+        console.log(targetTask)
+        let listSplicer = this.state.initTasks
+        for (let i = 0; i < listSplicer.length; i++) {
+            if (listSplicer[i] === targetTask) {
+                listSplicer.splice(i, 1)
+                
+            }
+            
+        }
+        this.setState({
+            initTasks: listSplicer
+        })
+
+    }
 
     addEntry = () => {
         axios.post('api/entries', {
@@ -73,28 +110,28 @@ export default class List extends Component {
         }).then(res => {
             console.log(res.data);
         })
-        .catch(err => {
-            console.log('err from server', err)
+            .catch(err => {
+                console.log('err from server', err)
+            })
+        this.setState({
+            accTasks: [],
+            initTasks: [],
         })
+
     }
-
-
-
-   
-
     render() {
         return (
             <div className='listStyle'>
                 <h1 className='header'> What will you do to better yourself today?</h1>
 
-                <input onChange={(e) => this.inputChange(e.target.value)} value={this.state.inputStr} className='inputGoals' type='text' placeholder='Enter goal...' />
+                <input onChange={(e) => this.inputChange(e.target.value)}  value={this.state.inputStr} onKeyDown={this.onEnter} className='inputGoals' type='text' placeholder='Enter goal...' />
 
                 <button onClick={() => this.addToTasks(this.state.inputStr)} className='btn'>Add Task</button>
 
                 <ul id='listItem'>
-                    {this.state.accTasks.map((val, i) =>
-                        <li className='taskItem' key={i}><label><input id='checkBox' type='checkbox' onChange={this.handleCheckChange} />{val}</label></li>)}
-                    {console.log(this.state.accTasks)}
+                    {this.state.initTasks.map((taskItem, i) =>
+                        <li className='taskItem' key={taskItem}><input id='checkBox' type='checkbox' onChange={this.handleCheckChange.bind(this, taskItem)} /><label htmlFor id='checkBox'>{taskItem}</label><button id='taskItemDel' onClick={this.handleTaskDelete.bind(this, taskItem)}>[X]</button></li>)}
+                    {console.log(this.state.initTasks)}
                 </ul>
 
                 <textarea id='inputThoughts' type='text' placeholder='Additional Thoughts..' wrap='soft' onChange={(e) => this.handleThoughtChange(e.target.value)} />

@@ -35,7 +35,16 @@ module.exports = {
     },
 
     updateItem(req, res) {
+        console.log('hit update')
+        const { id } = req.params
+        let { currThought } = req.query
 
+        // for (var i = 0; i < list.length: i++) {
+        //     if (list[i].id === req.params.id)
+        // }
+        let index = list.findIndex(list === list.id === +id)
+
+        currThought = list[index]
     },
 
     addItem(req, res) {
@@ -55,35 +64,23 @@ module.exports = {
         res.status(200).send(list)
     },
 
-    updateEntry(req,res) {
-        console.log('hit update')
-        const {id} = req.params
-        const {accTasks, thought} = req.body
+    updateEntry(req, res) {
 
-        let index = list.findIndex(list === list.id === +id)
-
-        let updatedEntry = {
-            accTasks,
-            thought
-        }
-        list[index] = {...list[index], ...updatedEntry}
     },
 
     deleteEntry(req, res) {
-       console.log('hit delete')
-       let {id} = req.params
-       console.log({id})
-    //    for(let i = 0; i < list.length; i++){
-    //        if(list[i].id === +id){
+        console.log('hit delete')
+        let { id } = req.params
+        console.log({ id })
         let index = list.findIndex(list => list.id === +id);
-    index !== -1 && list.splice(index, 1);
-            res.status(200).send(list)
-           }
-           
-       }
+        index !== -1 && list.splice(index, 1);
+        res.status(200).send(list)
+    }
 
-       
+}
 
-       
 
-    
+
+
+
+
