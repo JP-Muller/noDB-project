@@ -15,7 +15,7 @@ app.get('/api/entries', lc.dailyEntries)
 
 app.post('/api/entries', lc.addItem)
 
-app.put('/api/entries/:id', lc.updateEntry)
+app.put('/api/entries/:id', lc.updateItem)
 
 app.delete('/api/entries/:id', lc.deleteEntry)
 

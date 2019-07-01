@@ -60,9 +60,6 @@ module.exports = {
         //        list[index].thought = thought
         //    }
         
-        
-    
-
     addItem(req, res) {
         console.log('hit addItem')
         const { date, accTasks, thought } = req.body
@@ -78,10 +75,6 @@ module.exports = {
         id++
 
         res.status(200).send(list)
-    },
-
-    updateEntry(req, res) {
-
     },
 
     deleteEntry(req, res) {
