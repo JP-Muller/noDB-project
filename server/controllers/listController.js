@@ -55,10 +55,6 @@ module.exports = {
         list[index].thought = newThought
         res.status(200).send(list)
     },
-        // const newThought = list.map((element, index) => {
-        //    if (id = element.id) {
-        //        list[index].thought = thought
-        //    }
         
     addItem(req, res) {
         console.log('hit addItem')

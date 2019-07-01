@@ -110,19 +110,25 @@ cursor: pointer;
 }
 
 .aboutStyle {
-  margin-top: 25px;
+  margin-top: 15px;
+  font-size: 21px;
   text-shadow: 0 0 3px #ff0000, 0 0 5px #0000ff;
 }
 
 .aboutStyle2 {
-  padding: 25px;
+  /* padding: 25px; */
   font-size: 21px;
   margin: 25px;
   text-shadow: 0 0 3px #ff0000, 0 0 5px #0000ff;
 }
 
+#vidBox{
+margin-top: 20px;
+}
+
 .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 50vw;
@@ -141,14 +147,14 @@ cursor: pointer;
   margin-top: 50px;
 }
 
-/* .listStyle2{
+.listStyle2{
+  font-size: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  margin-top: 50px;
-} */
+  margin-top: 20px;
+}
 
 .btn {
   font-family: "Russo One", sans-serif;
@@ -304,7 +310,7 @@ input[type="checkbox"]:checked + label {
 .buttons {
   background: rgb(89, 0, 255);
   color: #ffff;
-  width: 100px;
+  width: 125px;
   font-size: 20px;
   border-radius: 7px;
   margin: 5px;
@@ -330,4 +336,15 @@ input[type="checkbox"]:checked + label {
 
 .entryIconRight {
   margin-left: 10px;
+}
+
+#update-thought {
+  margin-top: 37px;
+  padding: 7px;
+  height: 33%;
+  width: 50%;
+  opacity: 0.8;
+  border-radius: 5px;
+  text-align: center;
+  word-wrap: normal;
 }

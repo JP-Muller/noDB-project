@@ -8,7 +8,6 @@ export class DateTime extends Component {
             date: ''
         }
     }
-
     componentDidMount(){
         this.getDate()
     }
@@ -16,6 +15,7 @@ export class DateTime extends Component {
     getDate = () => {
         let date = new Date().toDateString()
         this.setState({ date })
+        console.log({date})
     }
 
     MornAfterEve = () => {
