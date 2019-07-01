@@ -1,4 +1,4 @@
-let id = 5
+let id = 7
 
 let list = [
     {
@@ -21,9 +21,22 @@ let list = [
     },
     {
         id: 4,
+        date: 'Thu June 20 2019',
+        accTasks: ['Learn more node', 'Study' ],
+        thought: 'Looking forward to learning more'
+    },
+    {
+        id: 5,
         date: 'Fri June 28 2019',
-        accTasks: ['Study express endpoints', 'Kill it', 'Kill it with fire'],
+        accTasks: ['Study express endpoints', 'Go grocery shopping', 'Kill it'],
         thought: 'Today was a good day. I made more progress on my noDb project.'
+    },
+    {
+        id: 6,
+        date: 'Sat June 29 2019',
+        accTasks: ['Work on CRUD', 'Go on a bike ride' ],
+        thought: 'Today was good. I added more functionality to my project.'
+    
     }
 
 ]
@@ -36,16 +49,19 @@ module.exports = {
 
     updateItem(req, res) {
         console.log('hit update')
-        const { id } = req.params
-        let { currThought } = req.query
-
-        // for (var i = 0; i < list.length: i++) {
-        //     if (list[i].id === req.params.id)
-        // }
-        let index = list.findIndex(list === list.id === +id)
-
-        currThought = list[index]
+        let { id } = req.params
+        let { newThought } = req.query
+        let index = list.findIndex(entries => entries.id === +id)
+        list[index].thought = newThought
+        res.status(200).send(list)
     },
+        // const newThought = list.map((element, index) => {
+        //    if (id = element.id) {
+        //        list[index].thought = thought
+        //    }
+        
+        
+    
 
     addItem(req, res) {
         console.log('hit addItem')

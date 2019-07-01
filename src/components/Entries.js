@@ -88,31 +88,20 @@ class Entries extends Component {
     };
 
     handleEditingDone = e => {
-        let { listId, currThought } = this.state
+        let {listId, currThought} = this.state
         let id = listId
+        let thought = currThought
         if (e.keyCode === 13) {
             console.log('Finished editing')
             this.setState({ editing: !this.state.editing })
             axios
-            .put(`/api/entries/${id}`, { currThought })
-            .then(res => {
-                console.log(res.data)
-                this.setState({ list: res.data })
-            })
-        }
-    }
-
-    updateThought() {
-        let { listId } = this.state
-        let id = listId
-        axios
-            .put(`/api/entries/${id}`)
+            .put(`/api/entries/${id}?newThought=${thought}`)
             .then(res => {
                 console.log(res.data)
                 this.setState({ list: res.data })
             })
             .catch(err => console.log(`Couldn't update..`, err))
-
+        }
     }
 
     deleteEntry() {
@@ -150,6 +139,7 @@ class Entries extends Component {
                         <div><li> {list[i].accTasks[7]} </li></div>
                         <div><li> {list[i].accTasks[8]} </li></div>
                         <div><li> {list[i].accTasks[9]} </li></div>
+                        <div><li> {list[i].accTasks[10]} </li></div>
                     </ul>
                 </div>
                 <hr />
@@ -163,7 +153,7 @@ class Entries extends Component {
 
                 </div>
                 <div className="button-row"  >
-                    <button  className="nextPrev" onClick={this.handlePrevious}>{'< Previous'}</button>
+                    <button className="nextPrev" onClick={this.handlePrevious}>{'< Previous'}</button>
                     <div className="middle-buttons">
                         <button className="buttons" onClick={this.handleEditing}>Edit</button>
                         <button className="buttons" onClick={this.deleteEntry} >Delete</button>
